@@ -12,10 +12,10 @@ class FilteredAudioBloc extends Bloc<FilteredAudioEvent, FilteredAudioState> {
   Set<String>? _lastFilteredAudio;
 
   FilteredAudioBloc(this._audioRepository) : super(const FilteredAudioInitial([])) {
-    on<FilteredAudioEvent>((event, emit) => _mapEventToState(event, emit));
+    on<FilteredAudioEvent>((event, emit) async => await _mapEventToState(event, emit));
   }
 
-  void _mapEventToState(FilteredAudioEvent event, Emitter emit) {
+  Future<void> _mapEventToState(FilteredAudioEvent event, Emitter emit) async {
     if (state is FilteredAudioLoading) {
       logger.w('FilteredAudioBloc triggered by ${event.runtimeType.toString()} on loading state. Skipping.');
       return;
@@ -28,7 +28,7 @@ class FilteredAudioBloc extends Bloc<FilteredAudioEvent, FilteredAudioState> {
     }
     switch (event) {
       case FilteredAudioLoadEvent e:
-        _loadAudios(e, emit);
+        await _loadAudios(e, emit);
     }
   }
 

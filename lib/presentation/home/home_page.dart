@@ -3,8 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ttcm_flutter_test/domain/bloc/audio_tags_bloc.dart';
 import 'package:ttcm_flutter_test/domain/bloc/download_audio_bloc.dart';
 import 'package:ttcm_flutter_test/domain/bloc/filtered_audio_bloc.dart';
+import 'package:ttcm_flutter_test/domain/bloc/playing_bloc.dart';
+import 'package:ttcm_flutter_test/domain/cubit/cached_audio_cubit.dart';
 import 'package:ttcm_flutter_test/injection.dart';
 import 'package:ttcm_flutter_test/presentation/home/widget/audio_body/audio_body_widget.dart';
+import 'package:ttcm_flutter_test/presentation/home/widget/player_widget/player_widget.dart';
 import 'package:ttcm_flutter_test/presentation/home/widget/tags_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,6 +21,8 @@ class _HomePageState extends State<HomePage> {
   final _audioTagsBloc = getIt.get<AudioTagsBloc>();
   final _filteredAudioBloc = getIt.get<FilteredAudioBloc>();
   final _downloadAudioBloc = getIt.get<DownloadAudioBloc>();
+  final _playingBloc = getIt.get<PlayingBloc>();
+  final _cachedAudioCubit = getIt.get<CachedAudioCubit>();
 
   final _selectedTagsNotifier = ValueNotifier<List<String>>([]);
 
@@ -35,6 +40,8 @@ class _HomePageState extends State<HomePage> {
     _downloadAudioBloc.close();
     _filteredAudioBloc.close();
     _audioTagsBloc.close();
+    _playingBloc.close();
+    _cachedAudioCubit.close();
     super.dispose();
   }
 
@@ -54,6 +61,8 @@ class _HomePageState extends State<HomePage> {
             BlocProvider.value(value: _audioTagsBloc),
             BlocProvider.value(value: _filteredAudioBloc),
             BlocProvider.value(value: _downloadAudioBloc),
+            BlocProvider.value(value: _playingBloc),
+            BlocProvider.value(value: _cachedAudioCubit),
           ],
           child: BlocConsumer<AudioTagsBloc, AudioTagsState>(
             listener: (context, state) {
@@ -74,6 +83,7 @@ class _HomePageState extends State<HomePage> {
                     const Expanded(
                       child: AudioBody(),
                     ),
+                    const PlayerWidget(),
                   ],
                 );
               }

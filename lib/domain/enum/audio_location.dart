@@ -1,0 +1,4 @@
+enum AudioLocation {
+  local,
+  remote,
+}

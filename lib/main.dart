@@ -4,7 +4,7 @@ import 'package:ttcm_flutter_test/injection.dart';
 import 'package:ttcm_flutter_test/presentation/application.dart';
 
 void main() async {
-  configureDependencies();
+  await configureDependencies();
 
   WidgetsFlutterBinding.ensureInitialized();
 

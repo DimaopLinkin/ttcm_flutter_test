@@ -14,7 +14,7 @@ class AudioBody extends StatelessWidget {
       builder: (context, state) {
         final audios = state.audiosList;
         return ListView.separated(
-          padding: EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 8.0 + MediaQuery.of(context).viewPadding.bottom),
+          padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 16),
           itemCount: audios.length,
           separatorBuilder: (context, index) => const SizedBox(height: 8),
           itemBuilder: (context, index) => AudioItemWidget(audioItem: audios[index]),
